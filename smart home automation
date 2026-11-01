@@ -1,0 +1,36 @@
+#include <DHT.h>
+
+#define DHTPIN 2
+#define DHTTYPE DHT22
+
+DHT dht(DHTPIN, DHTTYPE);
+
+const int LDR_PIN=A0, PIR_PIN=3, LIGHT_OUT=8, FAN_OUT=9;
+const int DARK_LEVEL=600; // calibrate
+const float TEMP_LIMIT=30.0;
+
+void setup() {
+  Serial.begin(9600);
+  dht.begin();
+
+  pinMode(PIR_PIN, INPUT);
+  pinMode(LIGHT_OUT, OUTPUT);
+  pinMode(FAN_OUT, OUTPUT);
+}
+
+void loop() {
+  int light = analogRead(LDR_PIN);
+  int motion = digitalRead(PIR_PIN);
+  float temp = dht.readTemperature();
+
+  bool valid = !isnan(temp);
+
+  digitalWrite(LIGHT_OUT, (light > DARK_LEVEL && motion) ? HIGH : LOW);
+  digitalWrite(FAN_OUT, (valid && temp >= TEMP_LIMIT) ? HIGH : LOW);
+
+  Serial.print("LDR="); Serial.print(light);
+  Serial.print(" motion="); Serial.print(motion);
+  Serial.print(" tempC="); Serial.println(valid ? temp : -999);
+
+  delay(1000);
+}
