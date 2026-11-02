@@ -6,7 +6,7 @@ machine health - https://wokwi.com/projects/479481939089015809
 
 environment monitoring - https://wokwi.com/projects/479482186167166977
 
-smart parking - https://wokwi.com/projects/479482373167108097
+smart parking - https://wokwi.com/projects/479575978600421377
 
 led pushbutton - https://wokwi.com/projects/479482720913783809
 
